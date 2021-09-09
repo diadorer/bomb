@@ -30,7 +30,8 @@ Please visit $REPO/releases/edit/$version to describe **release notes!**
 
 Also you can find publishing task here $REPO/actions/workflows/publish.yml"
 
-gh release create "$version" --title "$message" --notes ":TBD:" 
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+gh release create "$version" --title "$message" --notes ":TBD:" --target $CURRENT_BRANCH
 gh pr view --web
 
 echo -e "\n${GREEN}${BOLD}Done!${RESET}"
