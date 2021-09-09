@@ -20,9 +20,9 @@ jobs:
           python-version: "3.9"
       - name: Install Dependencies
         run: | 
-	  git log
-          pip install poetry
-          poetry install
+	  git log \
+          pip install poetry \
+          poetry install 
       - name: Build
         run: poetry build
       - name: Publish
