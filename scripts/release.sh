@@ -7,7 +7,7 @@ YELLOW=`tput setaf 3`
 BOLD=`tput bold`
 RESET=`tput sgr0`
 
-read -p "${BOLD}Do you really want to release${RESET} $(poetry version)? ${YELLOW}(y/д)${RESET}" -n 1 -r
+read -p "${BOLD}Do you really want to release${RESET} $(poetry version)? ${YELLOW}(y/д)${RESET} " -n 1 -r
 echo    # (optional) move to a new line
 if [[ ! $REPLY =~ ^[YyДд]$ ]]
 then
