@@ -21,11 +21,17 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: "3.9"
+      - name: Check tag is latest
+        run: |
+          git fetch --tags
+          LATEST_TAG=$(git fetch --tags)
+
       - name: Build Docs
         run: |
           mkdir site
-          BRANCH_NAME=$(git describe --tags)
-          echo "Hello! $BRANCH_NAME" > site/index.html
+          CURRENT_TAG=$(git describe --tags)
+          echo "CURRENT_TAG=$CURRENT_TAG"
+          echo "Hello! $CURRENT_TAG" > site/index.html
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
         with:
