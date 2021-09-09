@@ -9,6 +9,12 @@ RESET=`tput sgr0`
 
 PACKAGE_NAME=$(poetry version | cut -d ' ' -f1)
 
+UPDATE_RULE=${1:-''}
+if [[ $UPDATE_RULE != "minor" && $UPDATE_RULE != "patch" ]]; then
+    echo -e "Please, specify update rule — 'minor' or 'patch' \nExample usage: bash release.sh minor"
+    exit 1
+fi
+
 read -p "${BOLD}Do you really want to release $PACKAGE_NAME?${RESET} ${YELLOW}(y/д)${RESET} " -n 1 -r
 echo    # (optional) move to a new line
 if [[ ! $REPLY =~ ^[YyДд]$ ]]
@@ -31,9 +37,8 @@ Please visit $REPO/releases/edit/$version to describe **release notes!**
 Also you can find publishing task here $REPO/actions/workflows/publish.yml"
 
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-gh release create "$version" --title "$message" --notes ":TBD:" --target $CURRENT_BRANCH
+gh release create "$version" --title "$message" --notes "In progress..." --target $CURRENT_BRANCH
 gh pr view --web
 
 echo -e "\n${GREEN}${BOLD}Done!${RESET}"
-# echo "${BOLD}Please add release notes — $REPO/releases/edit/$version${RESET}"
 

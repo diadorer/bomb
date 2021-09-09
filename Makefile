@@ -1,8 +1,8 @@
 .PHONY: release
 release:
-	@bash scripts/release.sh
+	@bash scripts/release.sh minor
 
 
 .PHONY: hotrix
 hotfix:
-	@bash scripts/hotfix.sh
+	@bash scripts/release.sh patch
