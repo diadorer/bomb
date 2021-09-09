@@ -18,10 +18,11 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: "3.9"
+      - name: Debug
+        run: git log
       - name: Install Dependencies
         run: | 
-	  git log \
-          pip install poetry \
+          pip install poetry
           poetry install 
       - name: Build
         run: poetry build
