@@ -15,7 +15,7 @@ git checkout -b release/$version
 git commit -am "$message"
 git push -u origin release/$version
 
-gh pr create --title "$message" --body "# :bomb: Release $version! \n Please visit $REPO/releases/edit/$version to describe release notes!"
+gh pr create --title "$message" --body "Please visit $REPO/releases/edit/$version to describe **release notes!**"
 gh release create "$version" --title "$message" --notes ":TBD:" 
 gh pr view --web
 
