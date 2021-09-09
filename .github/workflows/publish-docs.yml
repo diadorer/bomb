@@ -24,7 +24,8 @@ jobs:
       - name: Build Docs
         run: |
           mkdir site
-          echo "Hello! ${{ github.ref }}" > site/index.html
+          BRANCH_NAME=$(git describe --tags)
+          echo "Hello! $BRANCH_NAME" > site/index.html
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.2
         with:
