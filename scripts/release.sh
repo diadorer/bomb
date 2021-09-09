@@ -23,7 +23,11 @@ git checkout -b release/$version
 git commit -am "$message"
 git push -u origin release/$version
 
-gh pr create --title "$message" --body "Please visit $REPO/releases/edit/$version to describe **release notes!**"
+gh pr create --title "$message" --body "# Great!
+Please visit $REPO/releases/edit/$version to describe **release notes!**
+
+Also you can find publishing task here $REPO/actions/workflows/publish.yml"
+
 gh release create "$version" --title "$message" --notes ":TBD:" 
 gh pr view --web
 
