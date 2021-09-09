@@ -22,17 +22,24 @@ jobs:
         with:
           python-version: "3.9"
       - name: Check tag is latest
+        id: check-tag
         run: |
           git fetch --tags
           LATEST_TAG=$(git fetch --tags)
-
+          if [[ ${{ github.event.workflow_run.head_branch }} == $LATEST_TAG ]]; then
+            echo "::set-output name=IS_LATEST::true"
+          else
+            echo "::set-output name=IS_LATEST::false"
+          fi
       - name: Build Docs
+        if: steps.check-tag.outputs.IS_LATEST == 'true'
         run: |
           mkdir site
           CURRENT_TAG=$(git describe --tags)
           echo "CURRENT_TAG=$CURRENT_TAG"
           echo "Hello! $CURRENT_TAG" > site/index.html
       - name: Deploy to Netlify
+        if: steps.check-tag.outputs.IS_LATEST == 'true'
         uses: nwtgck/actions-netlify@v1.2
         with:
           publish-dir: './site'
