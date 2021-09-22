@@ -4,4 +4,5 @@ class Bomb:
 
 
 print('Yoy!')
+print('One more!')
 
