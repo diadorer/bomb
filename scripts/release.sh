@@ -12,19 +12,19 @@ PACKAGE_NAME=$(poetry version | cut -d ' ' -f1)
 gh auth status || echo -e "\nPlease, auth with command: \n${BOLD}gh auth login --web${RESET}"
 
 UPDATE_RULE=${1:-''}
-if [[
-  $UPDATE_RULE != "minor" && $UPDATE_RULE != "patch" && $UPDATE_RULE != "preminor"
-]]; then
-    echo -e "Please, specify update rule — 'preminor', 'minor' or 'patch' \nExample usage: bash release.sh minor"
-    exit 1
-fi
 
-if [[ $UPDATE_RULE = "preminor" ]]; then
+if [[ $UPDATE_RULE = "preminor" || $UPDATE_RULE = "prepatch" || $UPDATE_RULE = "prerelease" ]]; then
   PRERELEASE=true
   PRERELEASE_PREFIX='PRE-'
 else
   PRERELEASE=false
   PRERELEASE_PREFIX=''
+fi
+
+if [[ $UPDATE_RULE != "minor" && $UPDATE_RULE != "patch" && $PRERELEASE != true ]]; then
+    echo -e "Please, specify update rule — 'preminor', 'prepatch', 'prerelease', 'minor' or 'patch'
+Example usage: bash release.sh minor"
+    exit 1
 fi
 
 read -p "${BOLD}Do you really want to ${PRERELEASE_PREFIX}release $PACKAGE_NAME?${RESET} ${YELLOW}(y/д)${RESET} " -n 1 -r
