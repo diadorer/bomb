@@ -12,7 +12,9 @@ PACKAGE_NAME=$(poetry version | cut -d ' ' -f1)
 gh auth status || echo -e "\nPlease, auth with command: \n${BOLD}gh auth login --web${RESET}"
 
 UPDATE_RULE=${1:-''}
-if [[ $UPDATE_RULE != "minor" && $UPDATE_RULE != "patch" && $UPDATE_RULE != "preminor" ]]; then
+if [[
+  $UPDATE_RULE != "minor" && $UPDATE_RULE != "patch" && $UPDATE_RULE != "preminor"
+]]; then
     echo -e "Please, specify update rule — 'preminor', 'minor' or 'patch' \nExample usage: bash release.sh minor"
     exit 1
 fi
