@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bomb-boom"
-version = "1.41.0-alpha.0"
+version = "1.41.0-alpha.2"
 description = "Bomb package"
 authors = ["Nikita Barinov <diadorer@yandex.ru>"]
 
@@ -12,6 +12,11 @@ packages = [
 python = "^3.9"
 
 [tool.poetry.dev-dependencies]
+cleo = "^0.8.1"
+typer = "^0.4.0"
+semver = "^2.13.0"
+click = "^8.0.1"
+colorama = "^0.4.4"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

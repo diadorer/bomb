@@ -16,6 +16,10 @@ UPDATE_RULE=${1:-''}
 if [[ $UPDATE_RULE = "preminor" || $UPDATE_RULE = "prepatch" || $UPDATE_RULE = "prerelease" ]]; then
   PRERELEASE=true
   PRERELEASE_PREFIX='PRE-'
+
+  PREV_VERSION=$(poetry version --short)
+
+#  if [[ ]]
 else
   PRERELEASE=false
   PRERELEASE_PREFIX=''
