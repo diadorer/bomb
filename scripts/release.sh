@@ -17,7 +17,15 @@ if [[ $UPDATE_RULE != "minor" && $UPDATE_RULE != "patch" && $UPDATE_RULE != "pre
     exit 1
 fi
 
-read -p "${BOLD}Do you really want to release $PACKAGE_NAME?${RESET} ${YELLOW}(y/д)${RESET} " -n 1 -r
+if [[ $UPDATE_RULE = "preminor" ]]; then
+  PRERELEASE=true
+  PRERELEASE_PREFIX='PRE-'
+else
+  PRERELEASE=false
+  PRERELEASE_PREFIX=''
+fi
+
+read -p "${BOLD}Do you really want to ${PRERELEASE_PREFIX}release $PACKAGE_NAME?${RESET} ${YELLOW}(y/д)${RESET} " -n 1 -r
 echo    # (optional) move to a new line
 if [[ ! $REPLY =~ ^[YyДд]$ ]]
 then
@@ -27,7 +35,7 @@ fi
 poetry version $UPDATE_RULE
 
 version=$(poetry version --short)
-message=":bomb: release $version"
+message=":bomb: ${PRERELEASE_PREFIX}release $version"
 
 git checkout -b release/$version
 git commit -am "$message"
@@ -39,7 +47,14 @@ Please visit $REPO/releases/edit/$version to describe **release notes!**
 Also you can find publishing task here $REPO/actions/workflows/publish.yml"
 
 CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-gh release create "$version" --title "$message" --notes "In progress..." --target $CURRENT_BRANCH
+if [[ $PRERELEASE = true ]]; then
+  GH_CREATE_RELEASE_ARGS='--prerelease'
+fi
+gh release create "$version" \
+  --title "$message" \
+  --notes "In progress..." \
+   --target $CURRENT_BRANCH \
+   $GH_CREATE_RELEASE_ARGS
 gh pr view --web
 
 echo -e "\n${GREEN}${BOLD}Done!${RESET}"
