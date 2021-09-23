@@ -38,7 +38,7 @@ def shell(command: str, *args: Tuple[str], capture_output: bool = False) -> Opti
         raise ShellError(f'Shell command returns code {out.returncode}')
 
     if capture_output:
-        return out.stdout.decode()
+        return out.stdout.decode().strip()
 
 
 def main(rule: Rule):
@@ -76,7 +76,7 @@ def main(rule: Rule):
 
     shell(f'poetry version {rule}')
 
-    version = shell('poetry version --short', capture_output=True).rstrip()
+    version = shell('poetry version --short', capture_output=True)
     message = f':bomb: {prerelease_prefix}release {version}'
 
     shell(f'git checkout -b release/{version}')
@@ -91,6 +91,7 @@ Also you can find publishing task here {REPO}/actions/workflows/publish.yml''')
 
     current_branch = shell('git rev-parse --abbrev-ref HEAD', capture_output=True)
     gh_release_args = ('--prerelease', ) if is_prerelease else ()
+    print('create release version', version)
     shell(
         f'gh release create "{version}"',
         '--title', message,
