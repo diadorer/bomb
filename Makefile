@@ -1,5 +1,5 @@
 .PHONY: prerelease
-release:
+prerelease:
 	@bash scripts/release.sh preminor
 
 
