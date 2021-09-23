@@ -3,11 +3,8 @@ import subprocess
 from typing import Tuple
 from typing import Optional
 
-
 import click
 import typer
-# from cleo.commands.command import Command
-# from poetry.core.semver.version import Version
 from semver import VersionInfo as Version
 
 
@@ -45,10 +42,8 @@ def main(rule: Rule):
     try:
         shell('gh auth status')
     except ShellError:
-        # Please, auth with command: \n${BOLD}gh auth login --web${RESET}
         typer.secho(
             f'Please, auth with command:\n' +
-            # typer.style("good", fg=typer.colors.GREEN, bold=True)
             typer.style("gh auth login --web", bold=True)
         )
         return
@@ -102,60 +97,6 @@ Also you can find publishing task here {REPO}/actions/workflows/publish.yml''')
     shell('gh pr view --web')
 
     typer.secho('Done!', fg=typer.colors.GREEN, bold=True)
-
-    # print('')
-    # gh release create "$version" \
-    #   --title "$message" \
-    #   --notes "In progress..." \
-    #    --target $CURRENT_BRANCH \
-    #    $GH_CREATE_RELEASE_ARGS
-
-# if [[ $PRERELEASE = true ]]; then
-#   GH_CREATE_RELEASE_ARGS='--prerelease'
-# fi
-# gh release create "$version" \
-#   --title "$message" \
-#   --notes "In progress..." \
-#    --target $CURRENT_BRANCH \
-#    $GH_CREATE_RELEASE_ARGS
-# gh pr view --web
-#
-# echo -e "\n${GREEN}${BOLD}Done!${RESET}"
-#
-
-
-#     gh pr create --title "$message" --body "# Great!
-# Please visit $REPO/releases/edit/$version to describe **release notes!**
-#
-# Also you can find publishing task here $REPO/actions/workflows/publish.yml"
-#
-# CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
-# if [[ $PRERELEASE = true ]]; then
-#   GH_CREATE_RELEASE_ARGS='--prerelease'
-# fi
-# gh release create "$version" \
-#   --title "$message" \
-#   --notes "In progress..." \
-#    --target $CURRENT_BRANCH \
-#    $GH_CREATE_RELEASE_ARGS
-# gh pr view --web
-#
-# echo -e "\n${GREEN}${BOLD}Done!${RESET}"
-
-# parser = argparse.ArgumentParser()
-# parser.add_argument(
-#     'rule',
-#     choices=['preminor', 'prepatch', 'prerelease', 'minor', 'patch'],
-# )
-#
-# args = parser.parse_args()
-# print(args.rule)
-#
-# package_name = subprocess.run('poetry version'.split(' '), capture_output=True).decode().split(' ')[0]
-# prev_version = Version(subprocess.run('poetry version --short'.split(' '), capture_output=True).decode())
-#
-# if prev_version.is_unstable() and args.rule in {'preminor', 'prepatch'}:
-#     raise ValueError('You should use "prerelease" command for update unstable releases')
 
 
 if __name__ == "__main__":
