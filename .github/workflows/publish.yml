@@ -53,7 +53,7 @@ jobs:
         run: |
           git fetch --tags
           LATEST_TAG=$(git tag -l --sort=-version:refname '1.*' | head -n 1)
-          if [[ ${{ github.event.workflow_run.head_branch }} == $LATEST_TAG ]]; then
+          if [[ ${{ github.event.release.tag_name }} == $LATEST_TAG ]]; then
             echo "::set-output name=IS_LATEST::true"
           else
             echo "::set-output name=IS_LATEST::false"
