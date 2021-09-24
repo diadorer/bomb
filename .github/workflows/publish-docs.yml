@@ -1,10 +1,13 @@
 name: Publish Docs
 on:
-  workflow_run:
-    workflows:
-      - Publish
-    types: 
-      - completed
+  push:
+    branches:
+      - somebranchthatisnotexists
+#  workflow_run:
+#    workflows:
+#      - Publish
+#    types:
+#      - completed
 
 jobs:
   build-docs:
