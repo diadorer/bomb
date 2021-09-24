@@ -3,8 +3,8 @@ prerelease:
 	@poetry run python scripts/release.py prerelease
 
 
-.PHONY: preminor-release
-preminor-release:
+.PHONY: release/preminor
+release/preminor:
 	@poetry run python scripts/release.py preminor
 
 
