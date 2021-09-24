@@ -28,3 +28,55 @@ jobs:
         run: poetry build
       - name: Publish
         run: poetry publish -u "${{ secrets.PYPI_USERNAME }}" -p "${{ secrets.PYPI_PASSWORD }}"
+
+  build-docs:
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump needs context
+        env:
+          NEEDS_CONTEXT: ${{ toJSON(needs) }}
+        run: echo "$NEEDS_CONTEXT"
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+      - name: Check tag is latest
+        id: check-tag
+        run: |
+          git fetch --tags
+          LATEST_TAG=$(git tag -l --sort=-version:refname '1.*' | head -n 1)
+          if [[ ${{ github.event.workflow_run.head_branch }} == $LATEST_TAG ]]; then
+            echo "::set-output name=IS_LATEST::true"
+          else
+            echo "::set-output name=IS_LATEST::false"
+          fi
+      - name: Build Docs
+        if: steps.check-tag.outputs.IS_LATEST == 'true'
+        run: |
+          mkdir site
+          CURRENT_TAG=$(git describe --tags)
+          echo "CURRENT_TAG=$CURRENT_TAG"
+          echo "Hello! $CURRENT_TAG" > site/index.html
+      - name: Deploy to Netlify
+        if: steps.check-tag.outputs.IS_LATEST == 'true'
+        uses: nwtgck/actions-netlify@v1.2
+        with:
+          publish-dir: './site'
+          production-branch: master
+          # alias: ${{ github.event.release.prerelease && 'alpha' }}
+          production-deploy: false
+          alias: 'alpha'
+          deploy-message: "Deploy from GitHub Actions"
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          enable-commit-comment: false
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}

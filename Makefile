@@ -1,13 +1,22 @@
 .PHONY: prerelease
 prerelease:
-	@bash scripts/release.sh preminor
+	@poetry run python scripts/release.py prerelease
+
+.PHONY: preminor
+preminor:
+	@poetry run python scripts/release.py preminor
 
 
-.PHONY: release
-release:
-	@bash scripts/release.sh minor
+.PHONY: prepatch
+prepatch:
+	@poetry run python scripts/release.py prepatch
 
 
-.PHONY: hotrix
-hotfix:
-	@bash scripts/release.sh patch
+.PHONY: minor
+minor:
+	@poetry run python scripts/release.py minor
+
+
+.PHONY: patch
+patch:
+	@poetry run python scripts/release.py patch
