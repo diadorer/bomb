@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "bomb-boom"
-version = "1.44.0-alpha.3"
+version = "1.44.0-alpha.4"
 description = "Bomb package"
 authors = ["Nikita Barinov <diadorer@yandex.ru>"]
 

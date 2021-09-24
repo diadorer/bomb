@@ -14,6 +14,10 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
+     - name: Dump needs context
+       env:
+         NEEDS_CONTEXT: ${{ toJSON(needs) }}
+       run: echo "$NEEDS_CONTEXT"
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.workflow_run.head_branch }}
