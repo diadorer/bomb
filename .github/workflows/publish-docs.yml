@@ -48,7 +48,8 @@ jobs:
         with:
           publish-dir: './site'
           production-branch: master
-          alias: ${{ github.event.release.prerelease && 'alpha' }}
+          # alias: ${{ github.event.release.prerelease && 'alpha' }}
+          alias: 'alpha'
           github-token: ${{ secrets.GITHUB_TOKEN }}
           enable-commit-comment: false
         env:
