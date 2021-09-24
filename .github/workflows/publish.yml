@@ -54,7 +54,7 @@ jobs:
           git fetch --tags
           TAGS=$(git tag -l --sort=-version:refname '1.*')
           UNSTABLE_TAGS_MATCH='\-alpha\|\-beta\|\-rc'
-          if [[ ${{ github.event.release.prerelease }} ]]; then
+          if [[ ${{ github.event.release.prerelease }} == true ]]; then
             TAGS=$(echo "$TAGS" | grep $UNSTABLE_TAGS_MATCH)
           else
             TAGS=$(echo "$TAGS" | grep -v $UNSTABLE_TAGS_MATCH)
