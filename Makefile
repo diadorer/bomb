@@ -1,5 +1,5 @@
-.PHONY: prerelease
-prerelease:
+.PHONY: release/prerelease
+release/prerelease:
 	@poetry run python scripts/release.py prerelease
 
 
