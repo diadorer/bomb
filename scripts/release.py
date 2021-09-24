@@ -88,7 +88,7 @@ Also you can find publishing task here {REPO}/actions/workflows/publish.yml''')
     gh_release_args = ('--prerelease', ) if is_prerelease else ()
     print('create release version', version)
     shell(
-        f'gh release create "{version}"',
+        f'gh release create {version}',
         '--title', message,
         '--notes', 'In progress...',
         '--target', current_branch,
