@@ -55,11 +55,11 @@ jobs:
           TAGS=$(git tag -l --sort=-version:refname '1.*')
           UNSTABLE_TAGS_MATCH='\-alpha\|\-beta\|\-rc'
           if [[ ${{ github.event.release.prerelease }} ]]; then
-            TAGS=$(echo $TAGS | grep $UNSTABLE_TAGS_MATCH)
+            TAGS=$(echo "$TAGS" | grep $UNSTABLE_TAGS_MATCH)
           else
-            TAGS=$(echo $TAGS | grep -v $UNSTABLE_TAGS_MATCH)
+            TAGS=$(echo "$TAGS" | grep -v $UNSTABLE_TAGS_MATCH)
           fi
-          LATEST_TAG=$(echo $TAGS | head -n 1)
+          LATEST_TAG=$(echo "$TAGS" | head -n 1)
           if [[ ${{ github.event.release.tag_name }} == $LATEST_TAG ]]; then
             echo "::set-output name=IS_LATEST::true"
           else
