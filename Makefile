@@ -8,17 +8,17 @@ release/preminor:
 	@poetry run python scripts/release.py preminor
 
 
-.PHONY: prepatch-release
-prepatch-release:
+.PHONY: release/prepatch
+release/prepatch:
 	@poetry run python scripts/release.py prepatch
 
 
-.PHONY: minor-release
-minor-release:
+.PHONY: release/minor
+release/minor:
 	@poetry run python scripts/release.py minor
 
 
-.PHONY: patch-release
-patch-release:
+.PHONY: release/patch
+release/patch:
 	@poetry run python scripts/release.py patch
 
