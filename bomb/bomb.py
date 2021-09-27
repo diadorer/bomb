@@ -5,4 +5,5 @@ class Bomb:
 
 print('Yoy!')
 print('One more!')
+print('Two more!')
 
